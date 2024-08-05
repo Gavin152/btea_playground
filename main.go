@@ -50,7 +50,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	uiString := "Was gibt's auf der Hütte?"
+	uiString := "Was gibt's auf der Hütte?\n\n"
 	return uiString
 }
 
