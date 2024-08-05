@@ -15,6 +15,7 @@ type model struct {
 func initialModel() model {
 	return model{
 		items:   []string{"Zirbe", "Schopf", "Erdäpfel", "Krenn", "Senf"},
+		cursor:  0,
 		checked: make(map[int]bool),
 	}
 }
@@ -34,7 +35,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.cursor--
 			}
 		case "down", "j":
-			if m.cursor == len(m.items)-1 {
+			if m.cursor < len(m.items)-1 {
 				m.cursor++
 			}
 		case "enter", "l":
@@ -53,12 +54,12 @@ func (m model) View() string {
 	uiString := "Was gibt's auf der Hütte?\n\n"
 
 	for i, item := range m.items {
-		cursor := ""
+		cursor := " "
 		if m.cursor == i {
 			cursor = ">"
 		}
 
-		checked := ""
+		checked := " "
 		if _, ok := m.checked[i]; ok {
 			checked = "x"
 		}
