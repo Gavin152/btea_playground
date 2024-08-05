@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	tea "github.com/charmbracelet/bubbletea"
+	"os"
 )
 
 type model struct {
@@ -45,4 +47,17 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 	return m, nil
+}
+
+func (m model) View() string {
+	uiString := "Was gibt's auf der Hütte?"
+	return uiString
+}
+
+func main() {
+	app := tea.NewProgram(initialModel())
+	if _, err := app.Run(); err != nil {
+		fmt.Println("Whoops, something went wrong here:\n", err)
+		os.Exit(1)
+	}
 }
