@@ -51,6 +51,22 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	uiString := "Was gibt's auf der Hütte?\n\n"
+
+	for i, item := range m.items {
+		cursor := ""
+		if m.cursor == i {
+			cursor = ">"
+		}
+
+		checked := ""
+		if _, ok := m.checked[i]; ok {
+			checked = "x"
+		}
+
+		uiString += fmt.Sprintf("%s [%s] %s\n", cursor, checked, item)
+	}
+
+	uiString += fmt.Sprintf("\nPress 'q' or 'crtl+x' to quit\n")
 	return uiString
 }
 
