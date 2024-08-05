@@ -15,6 +15,14 @@ type model struct {
 	viewport viewport.Model
 }
 
+var doneStyle lipgloss.Style = lipgloss.NewStyle().
+	Foreground(lipgloss.Color("#009688")).
+	Strikethrough(true)
+
+var openStyle lipgloss.Style = lipgloss.NewStyle().
+	Foreground(lipgloss.Color("#962244")).
+	Strikethrough(false)
+
 func initialModel() model {
 	vp := viewport.New(80, 10)
 	vp.Style = lipgloss.NewStyle().
@@ -69,11 +77,15 @@ func (m model) View() string {
 		}
 
 		checked := " "
+		style := openStyle
 		if _, ok := m.checked[i]; ok {
 			checked = "x"
+			style = doneStyle
 		}
 
-		uiString += fmt.Sprintf("%s [%s] %s\n", cursor, checked, item)
+		itemString := fmt.Sprintf("%s [%s] %s", cursor, checked, item)
+		uiString += style.Render(itemString)
+		uiString += "\n"
 	}
 
 	uiString += fmt.Sprintf("\nPress 'q' or 'crtl+x' to quit")
